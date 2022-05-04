@@ -1,12 +1,15 @@
 import streamlit as st
 from apps import (
-    cpfeatures_buffers
+    cpfeatures_buffers,
+    home
 )
 
 
 class MultiApp:
-    """Framework for combining multiple streamlit applications
-    (Credit: Qiusheng Wu,
+    """
+    Framework for combining multiple streamlit applications
+
+    Based off of https://github.com/giswqs/streamlit-geospatial (Qiusheng Wu)
     """
 
     def __init__(self):
@@ -33,22 +36,22 @@ class MultiApp:
 
         app_state['page'] = st.session_state.radio
 
-        st.experimental_get_query_params(**app_state)
+        # st.experimental_get_query_params(**app_state)
         functions[titles.index(title)]()
 
         st.sidebar.title('About')
         st.sidebar.info(
             """
-            This project (add link) was created by Jenny Song (add link), 
+            This [project](https://github.com/c6shi/nyc-squirrels) was created by Jenny Song (add link), 
             Ojas Vashishtha (add link) , and [Candus Shi](www.linkedin.com/in/candusshi)
             """
         )
 
 
-st.set_page_config(layout="wide")
+# st.set_page_config(layout="wide")
 
 apps = MultiApp()
 
-apps.add_app('Central Park Features', cpfeatures_buffers.app)
+apps.add_app('Home', home.app)
 
 apps.run()

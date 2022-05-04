@@ -9,9 +9,6 @@ from streamlit_folium import folium_static
 from shapely import wkt
 
 
-# Sidebar
-st.sidebar.title("Squirrels in NYC Central Park")
-
 # Title
 st.title("Central Park Features")
 
