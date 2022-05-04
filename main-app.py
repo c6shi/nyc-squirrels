@@ -1,7 +1,8 @@
 import streamlit as st
 from apps import (
-    cpfeatures_buffers,
-    home
+    home,
+    alldata,
+    buffers
 )
 
 
@@ -42,8 +43,9 @@ class MultiApp:
         st.sidebar.title('About')
         st.sidebar.info(
             """
-            This [project](https://github.com/c6shi/nyc-squirrels) was created by Jenny Song (add link), 
-            Ojas Vashishtha (add link) , and [Candus Shi](www.linkedin.com/in/candusshi)
+            This [project](https://github.com/c6shi/nyc-squirrels) was created by 
+            DS3's NYC Squirrels Team: Jenny Song(add link), 
+            Ojas Vashishtha(add link), and [Candus Shi](www.linkedin.com/in/candusshi).
             """
         )
 
@@ -53,5 +55,7 @@ class MultiApp:
 apps = MultiApp()
 
 apps.add_app('Home', home.app)
+apps.add_app('Central Park Features', alldata.app)
+apps.add_app('Buffers', buffers.app)
 
 apps.run()

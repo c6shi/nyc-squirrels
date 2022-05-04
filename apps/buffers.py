@@ -9,17 +9,32 @@ from streamlit_folium import folium_static
 from shapely import wkt
 
 
-# Title
-st.title("Central Park Features")
+def app():
+    st.title("Defining a Squirrel's Geospatial Relationship with Central Park")
+
+    st.subheader("Buffers: Near vs In")
+
+    st.markdown(
+        """
+        One way to quantify a squirrel's geographic relationship with Central Park
+        is to determine whether a squirrel is inside a certain geographic feature.
+        For example, a squirrel can be inside the woods, and we could label all the 
+        squirrels inside the woods and categorize them like so. 
+        
+        However, some features like water bodies do not allow squirrels to be ***in***
+        them. Rather, they could be near the water body and still be more associated 
+        with the water feature than a squirrel far away from the water body. Hence,
+        we expanded a squirrel's location in relation to feature to be ***near***
+        a feature.
+        """
+    )
+
 
 # Header
 st.header("This is a header")
 
 # Text
 st.text("data from the Squirrel Census")
-
-# Markdown
-st.markdown("### This is a markdown")
 
 # checkbox
 if st.checkbox("Show/Hide"):
