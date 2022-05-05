@@ -1,23 +1,20 @@
 import streamlit as st
-import streamlit.components.v1 as components
 import pandas as pd
 import geopandas as gpd
 import folium
 from streamlit_folium import folium_static
+from datacleaning import (
+    cp_allfeaturesmap,
+    cp_featuresmap,
+    cp_features,
+    allcolors
+)
 
 
 def app():
     st.title("Features in Central Park, NYC")
 
-    with open('maps/cp_allfeaturesmap.html', 'r') as cp_all:
-        cp_allfeatures_map = cp_all.read()
-
-    with open('maps/cp_featuresmap.html', 'r') as cp_bare:
-        cp_features_map = cp_bare.read()
-
-    cp_allfeatures = pd.read_csv('dataframes/cp_allfeatures.csv')
-    cp_features = pd.read_csv('dataframes/cp_features.csv')
-
+    # choosing between ALL FEATURES or RELEVANT FEATURES
     featuremap_selection = st.radio("Select a map", ("All Features", "Relevant Features"))
     if featuremap_selection == "All Features":
         st.markdown(
@@ -37,8 +34,9 @@ def app():
             - ... etc.
             """
         )
-        components.html(cp_allfeatures_map, height=600)
+        folium_static(cp_allfeaturesmap, height=700)
     else:
+        # choosing INDIVIDUAL RELEVANT FEATURES
         st.markdown(
             """
             #### Relevant Features
@@ -55,6 +53,21 @@ def app():
         # multi selection box
         relev_features = ['building', 'garden', 'grass', 'pedestrian', 'water', 'woods']
         features = st.multiselect("Choose relevant features in Central Park:", relev_features)
+        if st.checkbox("Show all relevant features"):
+            folium_static(cp_featuresmap, height=700)
+        else:
+            cp_selectfeatures_map = folium.Map(location=[40.7823, -73.96600],
+                                               zoom_start=14,
+                                               min_zoom=14,
+                                               tiles='cartodbpositron',
+                                               control_scale=True)
+            for feature in features:
+                folium.GeoJson(cp_features[cp_features['feature_type'] == feature],
+                               name=feature,
+                               style_function=lambda x: {'color': allcolors[feature],
+                                                         'fillOpacity': 0.6}
+                               ).add_to(cp_selectfeatures_map)
 
-        components.html(cp_features_map, height=600)
+            folium.LayerControl().add_to(cp_selectfeatures_map)
+            folium_static(cp_selectfeatures_map, height=700)
 
