@@ -128,3 +128,20 @@ for i in range(len(allfeatures)):
 folium.LayerControl().add_to(cp_allfeaturesmap)
 
 folium_static(cp_allfeaturesmap)
+
+### MAPPING
+
+def to_featuregroup_map(df, feature, folium_map, color_var, fillOp):
+    gen_stylefunc = lambda x: {'color': color_var, 'fillOpacity': fillOp}
+    to_geojson = folium.GeoJson(df[df['feature_type'] == feature], name=feature, style_function=gen_stylefunc)
+    to_featuregroup = folium.FeatureGroup(name=feature)
+    to_geojson.add_to(to_featuregroup)
+    to_featuregroup.add_to(folium_map)
+    return
+
+
+test_map = folium.Map(location=[40.7823, -73.96600],
+                      zoom_start=14,
+                      min_zoom=14,
+                      tiles='cartodbpositron',
+                      control_scale=True)

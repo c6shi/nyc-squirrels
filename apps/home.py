@@ -14,7 +14,7 @@ def app():
         """
     )
 
-    st.subheader("Raw Data")
+    st.subheader("The Data Set")
     st.markdown(
         """
         Below is a map of all squirrels recorded in the 2018 Central Park Squirrel Census, 
@@ -38,3 +38,13 @@ def app():
     all_squirrels.add_to(raw_data_map)
 
     folium_static(raw_data_map, width=620, height=680)
+
+    st.subheader("Question: How do the different geographic features of Central Park affect squirrel's behaviors?")
+
+    st.markdown(
+        """
+        1. getting outside data
+        2. performing geospatial analysis/buffer analysis
+        3. conducting permutation tests (our null hypothesis is...)
+        """
+    )

@@ -64,7 +64,7 @@ def app():
             for feature in features:
                 folium.GeoJson(cp_features[cp_features['feature_type'] == feature],
                                name=feature,
-                               style_function=lambda x: {'color': allcolors[feature],
+                               style_function=lambda x: {'color': allcolors.get(feature),
                                                          'fillOpacity': 0.6}
                                ).add_to(cp_selectfeatures_map)
 
