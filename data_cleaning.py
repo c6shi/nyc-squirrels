@@ -4,6 +4,7 @@ import numpy as np
 import shapely
 from shapely.geometry import mapping
 
+
 # 1) CLEANING GIVEN DATASET
 
 

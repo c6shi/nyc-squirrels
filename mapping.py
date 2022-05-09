@@ -78,6 +78,7 @@ for i in range(len(raw_data)):
 
 all_squirrels.add_to(raw_data_map)
 
+
 # 3) MAP FEATURES
 
 

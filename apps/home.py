@@ -7,15 +7,14 @@ from PIL import Image
 def app():
     st.title("Data Analysis on Squirrels in Central Park, NYC")
 
-    squirrel = Image.open('squirrel.jpg')
-    st.image(squirrel)
-
     st.markdown(
         """
         In October 2018, a group of volunteers went out to Central Park to attempt 
         to record squirrel sightings. 
         """
     )
+
+    # squirrel = Image.open('squirrel.jpeg')
 
     st.subheader("Question: How do the different geographic features of Central Park affect squirrel's behaviors?")
 
