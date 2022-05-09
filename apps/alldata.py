@@ -3,11 +3,13 @@ import pandas as pd
 import geopandas as gpd
 import folium
 from streamlit_folium import folium_static
-from datacleaning import (
+from data_cleaning import (
+    cp_features
+)
+from mapping import (
     cp_allfeaturesmap,
     cp_featuresmap,
-    cp_features,
-    allcolors
+    all_colors
 )
 
 
@@ -64,7 +66,7 @@ def app():
             for feature in features:
                 folium.GeoJson(cp_features[cp_features['feature_type'] == feature],
                                name=feature,
-                               style_function=lambda x: {'color': allcolors.get(feature),
+                               style_function=lambda x: {'color': all_colors.get(feature),
                                                          'fillOpacity': 0.6}
                                ).add_to(cp_selectfeatures_map)
 

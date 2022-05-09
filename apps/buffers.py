@@ -5,9 +5,13 @@ import folium
 import streamlit as st
 import json
 from streamlit_folium import folium_static
-from datacleaning import (
-    bfsqrls,
-    test_map
+from data_cleaning import (
+    cp_features
+)
+from mapping import (
+    cp_allfeaturesmap,
+    cp_featuresmap,
+    all_colors
 )
 
 
@@ -31,6 +35,6 @@ def app():
         """
     )
 
-    folium_static(test_map, height=700)
+    # folium_static(test_map, height=700)
 
 

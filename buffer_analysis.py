@@ -2,7 +2,6 @@ import geopandas as gpd
 import math
 import pyproj
 import numpy as np
-from shapely.ops import transform
 from data_cleaning import (
     centralpark_perimeter,
     nyc_gdf1,
