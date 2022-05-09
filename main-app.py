@@ -1,7 +1,7 @@
 import streamlit as st
 from apps import (
     home,
-    alldata,
+    features,
     buffers
 )
 
@@ -55,7 +55,7 @@ class MultiApp:
 apps = MultiApp()
 
 apps.add_app('Home', home.app)
-apps.add_app('Central Park Features', alldata.app)
+apps.add_app('Central Park Features', features.app)
 apps.add_app('Buffers', buffers.app)
 
 apps.run()

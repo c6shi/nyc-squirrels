@@ -11,6 +11,7 @@ from data_cleaning import (
     cp_features,
     relev_features
 )
+from buffer_analysis import buffer_features
 
 
 # 1) DEFINE FUNCTIONS FOR GENERALIZED MAPPING
@@ -32,7 +33,7 @@ def geojson_to_map_obj(df, one_feature, folium_obj, color_var, fill_op):
     gen_stylefunc = lambda x: {'color': color_var, 'fillOpacity': fill_op}
     to_geojson = folium.GeoJson(
         df[df['feature_type'] == one_feature],
-        name=feature,
+        name=one_feature,
         style_function=gen_stylefunc)
     to_geojson.add_to(folium_obj)
     return
@@ -51,10 +52,10 @@ def featuregroup_to_map(df, one_feature, folium_map, color_var, fill_op):
     :param fill_op: opacity of the object
     :return:
     """
-    featuregroup = folium.FeatureGroup(name=feature)
+    featuregroup = folium.FeatureGroup(name=one_feature)
     geojson_to_map_obj(df, one_feature, featuregroup, color_var, fill_op)
     featuregroup.add_to(folium_map)
-    return
+    return featuregroup
 
 
 # 2) MAP RAW DATA
@@ -120,6 +121,7 @@ for feature in all_features:
 
 folium.LayerControl().add_to(cp_allfeaturesmap)
 
+
 # b) relevant features
 
 
@@ -131,15 +133,44 @@ cp_featuresmap = folium.Map(
     control_scale=True
 )
 
-for i in range(len(relev_features)):
+for relev_feature in relev_features:
     geojson_to_map_obj(
         cp_features,
-        relev_features[i],
+        relev_feature,
         cp_featuresmap,
-        all_colors[relev_features[i]],
+        all_colors[relev_feature],
         0.6
     )
 
 folium.LayerControl().add_to(cp_featuresmap)
 
+
 # 4) MAP BUFFERS
+
+
+buffermap = folium.Map(
+    location=[40.7823, -73.96600],
+    zoom_start=14,
+    min_zoom=14,
+    tiles='cartodbpositron',
+    control_scale=True
+)
+
+
+for relev_feature in relev_features:
+    buffer_fg = featuregroup_to_map(
+        buffer_features,
+        relev_feature,
+        buffermap,
+        all_colors[relev_feature],
+        0.2
+    )
+    geojson_to_map_obj(
+        cp_features,
+        relev_feature,
+        buffer_fg,
+        all_colors[relev_feature],
+        0.6
+    )
+
+folium.LayerControl().add_to(buffermap)

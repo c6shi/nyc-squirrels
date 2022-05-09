@@ -11,8 +11,10 @@ from data_cleaning import (
 from mapping import (
     cp_allfeaturesmap,
     cp_featuresmap,
-    all_colors
+    all_colors,
+    buffermap
 )
+from buffer_analysis import buffer_features
 
 
 def app():
@@ -30,11 +32,11 @@ def app():
         However, some features like water bodies do not allow squirrels to be ***in***
         them. Rather, they could be near the water body and still be more associated 
         with the water feature than a squirrel far away from the water body. Hence,
-        we expanded a squirrel's location in relation to feature to be ***near***
+        we expanded a squirrel's location in relation to a feature to be ***near***
         a feature.
         """
     )
 
-    # folium_static(test_map, height=700)
+    folium_static(buffermap, width=620, height=680)
 
 

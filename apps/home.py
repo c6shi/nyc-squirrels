@@ -9,8 +9,7 @@ def app():
 
     st.markdown(
         """
-        In October 2018, a group of volunteers went out to Central Park to attempt 
-        to record squirrel sightings. 
+        Introduction? Or remove?
         """
     )
 
@@ -54,8 +53,13 @@ def app():
         """
         #### Rundown of the process
         
-        1. getting outside data
-        2. performing geospatial analysis/buffer analysis
-        3. conducting permutation tests (our null hypothesis is...)
+        1. Cleaning the raw data: converting the types of columns to \
+        more usable data types, dropping columns unnecessary to our goal
+        2. Obtaining the Central Park data: using the OpenStreetMap database, \
+        we selected features in Central Park that could best describe Central Park \
+        (i.e. features unique to a park like lakes, reservoirs, playgrounds, gardens, etc. \
+        and features that took up large amounts of space) in geojson form
+        3. Performing geospatial analysis/buffer analysis + one hot encoding
+        4. Conducting permutation tests (our null hypothesis is...)
         """
     )
