@@ -8,10 +8,11 @@ from shapely.geometry import mapping
 
 
 # a) read data and transform to wgs84
-raw_data = pd.read_csv('dataframes/nycsquirrels_raw.csv')
-nyc_gdf = gpd.read_file('dataframes/nycsquirrels_clean_1.csv')
+raw_data = pd.read_csv('dataframes/nycsquirrels_raw.csv')  # for raw data map
+nyc_gdf = gpd.read_file('dataframes/nycsquirrels_raw.csv')
 nyc_gdf = gpd.GeoDataFrame(nyc_gdf, geometry=gpd.points_from_xy(nyc_gdf.long, nyc_gdf.lat))
 nyc_gdf1 = nyc_gdf.set_crs('epsg:4326')
+
 
 # b) convert fake bools (string) into 0s and 1s
 behaviors = ['approaches', 'indifferent', 'runs_from',
