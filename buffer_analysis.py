@@ -15,7 +15,7 @@ from data_cleaning import (
 
 squirrel_inside = nyc_gdf1.within(centralpark_perimeter)
 nyc_gdf1 = nyc_gdf1.assign(inside=squirrel_inside)
-nyc_gdf1 = nyc_gdf1[nyc_gdf1.get('inside') == True]
+nyc_gdf1 = nyc_gdf1[nyc_gdf1.get('inside')==True]
 
 
 # 2) DETERMINING BEST BUFFER
@@ -27,11 +27,11 @@ planar_features['area'] = planar_features.geometry.area
 
 
 # b) define buffer function (variable)
-def calculate_buffer_radius(area, factor, cap, base):
+def calculate_buffer_radius(area, power, factor, cap, base):
     # buffer_counter[0] = factor
     if area == 0:
         return base
-    math_func = math.pow(area, 0.4) * factor
+    math_func = math.pow(area, power) * factor
     if math_func > cap:
         return cap
     return math_func
@@ -56,7 +56,7 @@ geospatial_analysis = ['nearbuilding',
 
 # d) apply buffer function
 planar_features['buffer_radius'] = planar_features['area'].apply(
-    calculate_buffer_radius, factor=1.2, cap=150, base=50)
+    calculate_buffer_radius, power=0.4, factor=1.2, cap=150, base=50)
 
 
 # e) define buffer analysis function on planar projected points_df

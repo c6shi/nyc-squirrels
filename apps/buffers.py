@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-import requests
+import geemap
 import folium
 import streamlit as st
 import json
@@ -38,7 +38,19 @@ def app():
         """
     )
 
-    folium_static(buffermap, width=620, height=680)
-    folium_static(squirrels_buffered_map, width=620, height=680)
+    power = st.slider("Select the buffer power:", 0.1, 1.0, step=0.05)
+    factor_slider = st.slider("Select the buffer factor:", 0.1, 4.0, step=0.1)
+    st.text("Buffer size: {1} * area ^ {0}".format(power, factor_slider))
+
+    col1, col2 = st.columns(2)
+    with col1:
+        folium_static(buffermap, width=620, height=680)
+
+    with col2:
+        folium_static(squirrels_buffered_map, width=620, height=680)
+
+    st.markdown("Display count of squirrels in each buffer as a bar graph")
+    st.markdown("Small multiple graphs to show why we chose 0.4 and 1.2?")
+
 
 

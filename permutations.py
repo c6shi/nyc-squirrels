@@ -1,11 +1,13 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from data_cleaning import behaviors
-from buffer_analysis import geospatial_analysis as features
+from buffer_analysis import bfsqrls
 
-sqrls = pd.read_csv('dataframes/bfsqrls.csv')
-sqrls = sqrls.drop(columns='Unnamed: 0')
+behaviors = [
+    'approaches', 'indifferent', 'runs_from',
+    'running', 'chasing', 'eating', 'foraging', 'climbing']
+
+features = ['nearbuilding', 'neargarden', 'neargrass', 'nearpedestrian', 'nearwater', 'nearwoods']
 
 stats_rows = []
 
@@ -14,7 +16,7 @@ for b in behaviors:
         f1 = features[i]
         for j in range(i + 1, len(features)):
             f2 = features[j]
-            behavior_df = sqrls[[b, f1, f2]]
+            behavior_df = bfsqrls[[b, f1, f2]]
             grouped = behavior_df.groupby(behavior_df[b]).sum()
             grouped = grouped.divide(grouped.sum(axis=0), axis=1)
             observed_stat = abs(grouped.loc[1][1] - grouped.loc[1][0])
@@ -38,3 +40,4 @@ for b in behaviors:
 
 stats_df = pd.DataFrame(stats_rows)
 stats_df.columns = ['behavior', 'feature 1', 'feature 2', 'p-value']
+stats_df.to_csv("dataframes/permutation_results.csv")

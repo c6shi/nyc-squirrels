@@ -5,7 +5,7 @@ from shapely.ops import transform
 from shapely.geometry import mapping
 from folium import Popup, Tooltip
 from data_cleaning import (
-    raw_data,
+    nyc_gdf,
     nyc_gdf1,
     cp_allfeatures,
     cp_features,
@@ -70,12 +70,13 @@ raw_data_map = folium.Map(
 
 all_squirrels = folium.FeatureGroup(name="squirrels")
 
-for i in range(len(raw_data)):
+nyc_gdf = nyc_gdf.set_crs('epsg:4326')
+
+for i in range(len(nyc_gdf)):
     folium.Circle(
-        location=(raw_data.iloc[i]['lat'], raw_data.iloc[i]['long']),
+        location=(nyc_gdf.iloc[i]['lat'], nyc_gdf.iloc[i]['long']),
         radius=2,
-        tooltip=Tooltip('<p>' + str(dict(raw_data.iloc[i])).replace(',', '<br>') + '<p>'),
-        color='gray'
+        tooltip=Tooltip('<p>' + str(dict(nyc_gdf.iloc[i])).replace(',', '<br>') + '<p>')
     ).add_to(all_squirrels)
 
 all_squirrels.add_to(raw_data_map)
@@ -189,14 +190,21 @@ squirrels_buffered_map = folium.Map(
 )
 
 squirrels_in_buffer = folium.FeatureGroup(name='squirrels remaining')
+squirrels_notin_buffer = folium.FeatureGroup(name='all squirrels')
 
 for i in range(len(bfsqrls)):
-    sqrl_color = '#FF4B4B'
     folium.Circle(
         location=(bfsqrls.iloc[i]['lat'], bfsqrls.iloc[i]['long']),
-        color=sqrl_color,
+        color='#FF4B4B',
         radius=2).add_to(squirrels_in_buffer)
 
-all_squirrels.add_to(squirrels_buffered_map)
+for i in range(len(nyc_gdf1)):
+    folium.Circle(
+        location=(nyc_gdf1.iloc[i]['lat'], nyc_gdf1.iloc[i]['long']),
+        color='gray',
+        radius=2).add_to(squirrels_notin_buffer)
+
+squirrels_notin_buffer.add_to(squirrels_buffered_map)
 squirrels_in_buffer.add_to(squirrels_buffered_map)
+
 

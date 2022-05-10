@@ -9,8 +9,7 @@ from shapely.geometry import mapping
 
 
 # a) read data and transform to wgs84
-raw_data = pd.read_csv('dataframes/nycsquirrels_raw.csv')  # for raw data map
-nyc_gdf = gpd.read_file('dataframes/nycsquirrels_raw.csv')
+nyc_gdf = gpd.read_file('dataframes/nycsquirrels_raw.csv') # for raw data map
 nyc_gdf = gpd.GeoDataFrame(nyc_gdf, geometry=gpd.points_from_xy(nyc_gdf.long, nyc_gdf.lat))
 nyc_gdf1 = nyc_gdf.set_crs('epsg:4326')
 
@@ -79,7 +78,9 @@ fix_invalid(pedestrian_osm, 0)
 cp_water = water_osm[water_osm.within(centralpark_perimeter)].assign(feature_type='water')
 cp_stream = stream_osm[stream_osm.within(centralpark_perimeter)].assign(feature_type='water')
 cp_playg = playg_osm[playg_osm.within(centralpark_perimeter)].assign(feature_type='playground')
-cp_paved = paved_osm[paved_osm.within(centralpark_perimeter)].assign(feature_type='paved')
+cp_paved_within = paved_osm[paved_osm.within(centralpark_perimeter)].assign(feature_type='paved')
+cp_paved_intersect = paved_osm[paved_osm.intersects(centralpark_perimeter)].assign(feature_type='paved')
+cp_paved = pd.concat([cp_paved_within, cp_paved_intersect]).drop_duplicates()
 cp_toilets = toilets_osm[toilets_osm.within(centralpark_perimeter)].assign(feature_type='toilet')
 cp_building = pd.concat([northbd_osm[northbd_osm.within(centralpark_perimeter)],
                          jorbd_osm[jorbd_osm.within(centralpark_perimeter)],
@@ -92,7 +93,9 @@ cp_woods = woods_osm[woods_osm.within(centralpark_perimeter)].assign(feature_typ
 cp_baseballpitch = baseball_osm[baseball_osm.within(centralpark_perimeter)].assign(feature_type='baseball')
 cp_grass = grass_osm[grass_osm.within(centralpark_perimeter)].assign(feature_type='grass')
 cp_barerock = barerock_osm[barerock_osm.within(centralpark_perimeter)].assign(feature_type='bare rock')
-cp_pedestrian = pedestrian_osm[pedestrian_osm.within(centralpark_perimeter)].assign(feature_type='pedestrian')
+cp_pedestrian_within = pedestrian_osm[pedestrian_osm.within(centralpark_perimeter)].assign(feature_type='pedestrian')
+cp_pedestrian_intersect = pedestrian_osm[pedestrian_osm.intersects(centralpark_perimeter)].assign(feature_type='pedestrian')
+cp_pedestrian = pd.concat([cp_pedestrian_within, cp_pedestrian_intersect]).drop_duplicates()
 cp_sportscenter = sportscenter_osm[sportscenter_osm.within(centralpark_perimeter)].assign(feature_type='sports center')
 cp = centralpark_poly.assign(feature_type='central park')
 
@@ -130,5 +133,5 @@ cp_features = (
                   .sort_values(by='feature_type')
                   .reset_index(drop=True))
 
-cp_allfeatures.to_csv('dataframes/cp_allfeatures.csv')
-cp_features.to_csv('dataframes/cp_features.csv')
+# cp_allfeatures.to_csv('dataframes/cp_allfeatures.csv')
+# cp_features.to_csv('dataframes/cp_features.csv')
