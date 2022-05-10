@@ -11,7 +11,7 @@ from data_cleaning import (
     cp_features,
     relev_features
 )
-from buffer_analysis import buffer_features
+from buffer_analysis import buffer_features, bfsqrls
 
 
 # 1) DEFINE FUNCTIONS FOR GENERALIZED MAPPING
@@ -74,7 +74,8 @@ for i in range(len(raw_data)):
     folium.Circle(
         location=(raw_data.iloc[i]['lat'], raw_data.iloc[i]['long']),
         radius=2,
-        tooltip=Tooltip('<p>' + str(dict(raw_data.iloc[i])).replace(',', '<br>') + '<p>')
+        tooltip=Tooltip('<p>' + str(dict(raw_data.iloc[i])).replace(',', '<br>') + '<p>'),
+        color='gray'
     ).add_to(all_squirrels)
 
 all_squirrels.add_to(raw_data_map)
@@ -174,3 +175,28 @@ for relev_feature in relev_features:
     )
 
 folium.LayerControl().add_to(buffermap)
+
+
+# 5) MAP SQUIRRELS INSIDE BUFFER
+
+
+squirrels_buffered_map = folium.Map(
+    location=[40.7823, -73.96600],
+    zoom_start=14,
+    min_zoom=14,
+    tiles='cartodbpositron',
+    control_scale=True
+)
+
+squirrels_in_buffer = folium.FeatureGroup(name='squirrels remaining')
+
+for i in range(len(bfsqrls)):
+    sqrl_color = '#FF4B4B'
+    folium.Circle(
+        location=(bfsqrls.iloc[i]['lat'], bfsqrls.iloc[i]['long']),
+        color=sqrl_color,
+        radius=2).add_to(squirrels_in_buffer)
+
+all_squirrels.add_to(squirrels_buffered_map)
+squirrels_in_buffer.add_to(squirrels_buffered_map)
+

@@ -105,5 +105,4 @@ bfsqrls = buffered_nyc_df.query('nearbuilding == True '
                                 'or nearwoods == True'
                                 ).reset_index().drop(columns='index')
 
-bfsqrls = bfsqrls.drop(columns=['long', 'lat', 'geometry'])
 bfsqrls.to_csv('dataframes/bfsqrls.csv')

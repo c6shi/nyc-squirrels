@@ -12,7 +12,8 @@ from mapping import (
     cp_allfeaturesmap,
     cp_featuresmap,
     all_colors,
-    buffermap
+    buffermap,
+    squirrels_buffered_map
 )
 from buffer_analysis import buffer_features
 
@@ -38,5 +39,6 @@ def app():
     )
 
     folium_static(buffermap, width=620, height=680)
+    folium_static(squirrels_buffered_map, width=620, height=680)
 
 
