@@ -2,7 +2,8 @@ import streamlit as st
 from apps import (
     home,
     features,
-    buffers
+    buffers,
+    stats
 )
 
 
@@ -57,5 +58,6 @@ apps = MultiApp()
 apps.add_app('Home', home.app)
 apps.add_app('Central Park Features', features.app)
 apps.add_app('Buffers', buffers.app)
+apps.add_app('Permutation Tests', stats.app)
 
 apps.run()
