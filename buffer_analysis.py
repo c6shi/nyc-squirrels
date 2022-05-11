@@ -106,3 +106,7 @@ bfsqrls = buffered_nyc_df.query('nearbuilding == True '
                                 ).reset_index().drop(columns='index')
 
 bfsqrls.to_csv('dataframes/bfsqrls.csv')
+bfsqrlspd = bfsqrls.drop(columns=['long', 'lat', 'geometry'])
+bfsqrlspd.to_csv('dataframes/bfsqrlspd.csv')
+
+print(nyc_gdf1['approaches'].unique())

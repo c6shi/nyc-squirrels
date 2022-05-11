@@ -20,7 +20,7 @@ behaviors = ['approaches', 'indifferent', 'runs_from',
              'kuks', 'quaas', 'moans', 'tail_flags', 'tail_twitches']
 
 behavior_to_int = pd.DataFrame(
-    {behavior: nyc_gdf1[behavior].apply(lambda x: 1 if x == 'TRUE' else 0) for behavior in behaviors})
+    {behavior: nyc_gdf1[behavior].apply(lambda x: 1 if x == 'True' else 0) for behavior in behaviors})
 nyc_gdf1.update(behavior_to_int)
 
 # c) convert fake floats (string) to floats
@@ -29,6 +29,9 @@ lat_float = nyc_gdf['lat'].apply(lambda x: float(x))
 
 nyc_gdf1 = nyc_gdf1.assign(long=nyc_gdf1['long'].apply(lambda x: float(x)),
                            lat=nyc_gdf['lat'].apply(lambda x: float(x)))
+
+nyc_gdf1.to_csv('dataframes/nyc_gdf1.csv')
+
 
 # 2) ADDING OSM DATA
 
@@ -133,5 +136,5 @@ cp_features = (
                   .sort_values(by='feature_type')
                   .reset_index(drop=True))
 
-# cp_allfeatures.to_csv('dataframes/cp_allfeatures.csv')
-# cp_features.to_csv('dataframes/cp_features.csv')
+cp_allfeatures.to_csv('dataframes/cp_allfeatures.csv')
+cp_features.to_csv('dataframes/cp_features.csv')

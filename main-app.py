@@ -3,7 +3,9 @@ from apps import (
     home,
     features,
     buffers,
-    stats
+    stats,
+    resultsdisc,
+    finalefuture
 )
 
 
@@ -60,5 +62,7 @@ apps.add_app('Home', home.app)
 apps.add_app('Central Park Features', features.app)
 apps.add_app('Buffers', buffers.app)
 apps.add_app('Permutation Tests', stats.app)
+apps.add_app('Results', resultsdisc.app)
+apps.add_app('Final Thoughts', finalefuture.app)
 
 apps.run()
