@@ -7,18 +7,20 @@ from PIL import Image
 def app():
     st.title("Data Analysis on Squirrels in Central Park, NYC")
 
-    st.markdown(
-        """
-        Introduction? Or remove?
-        """
-    )
-
     # squirrel = Image.open('squirrel.jpeg')
 
     st.subheader("Question: How do the different geographic features of Central Park affect squirrel's behaviors?")
 
     st.markdown(
         """
+        Squirrels. The data problem of the future. What is it about squirrels that is so fascinating to the Squirrel 
+        Census team that they spent two weeks gathering data about those creatures? 
+        Perhaps it is the informational data they could get about Central Park itself and its interactions with the 
+        animals that inhabit it. Or maybe they wanted to analyze one of the most populous and overlooked animals in the 
+        United States. Or maybe they were just obsessed with Squirrel-Girl the Marvel superhero. 
+        Regardless, hundreds of volunteers sought out to examine these eastern gray squirrels, 
+        looking for valuable insights. 
+        
         Since we had access to geospatial data in the form of the coordinates of a squirrel sighting, 
         we wanted to make use of this information. Given the diverse environment of Central Park, 
         we decided to compare the geographic features of Central Park, 
@@ -53,13 +55,19 @@ def app():
         """
         #### Rundown of the process
         
-        1. Cleaning the raw data: converting the types of columns to \
-        more usable data types, dropping columns unnecessary to our goal
-        2. Obtaining the Central Park data: using the OpenStreetMap database, \
+        1. Cleaning the raw data by converting the types of columns to \
+        more usable data types and dropping unnecessary columns determined by EDA
+        2. Obtaining the Central Park data. Using the OpenStreetMap database, \
         we selected features in Central Park that could best describe Central Park \
         (i.e. features unique to a park like lakes, reservoirs, playgrounds, gardens, etc. \
-        and features that took up large amounts of space) in geojson form
-        3. Performing geospatial analysis/buffer analysis + one hot encoding
-        4. Conducting permutation tests (our null hypothesis is...)
+        and features that took up large amounts of space). These were downloaded \
+        in the geojson format.
+        3. Performing geospatial analysis such as buffer analysis to obtain \
+        data on a squirrel's geographic relationship with Central Park
+        4. Conducting permutation tests based on this null hypothesis: \
+        There is no difference between the proportion of squirrels \
+        exhibiting a specific behavior near one feature of Central Park \
+        than the proportion of squirrels exhibiting the same behavior \
+        near a distinct, different feature. 
         """
     )

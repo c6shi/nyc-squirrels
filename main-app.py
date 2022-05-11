@@ -45,8 +45,9 @@ class MultiApp:
         st.sidebar.info(
             """
             This [project](https://github.com/c6shi/nyc-squirrels) was created by 
-            DS3's NYC Squirrels Team: Jenny Song(add link), 
-            Ojas Vashishtha(add link), and [Candus Shi](www.linkedin.com/in/candusshi).
+            DS3's NYC Squirrels Team: [Jenny Song](https://www.linkedin.com/in/jiani-jenny-song/), 
+            [Ojas Vashishtha](https://www.linkedin.com/in/ojas-vashishtha-b26604223/), 
+            and [Candus Shi](www.linkedin.com/in/candusshi).
             """
         )
 
