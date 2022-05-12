@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+from matplotlib.figure import Figure
 
 behaviors = [
     'approaches', 'indifferent', 'runs_from',
@@ -22,7 +23,7 @@ def permutation_test(b, f1, f2):
 
     stats = np.array([])
 
-    for i in range(100):
+    for i in range(10000):
         shuffled = behavior_df[b].sample(frac=1).reset_index(drop=True)
         shuffled_df = behavior_df.assign(**{'shuffled ' + b: shuffled})
         shuffled_grouped = shuffled_df.groupby('shuffled ' + b).sum()
@@ -30,13 +31,22 @@ def permutation_test(b, f1, f2):
         shuffled_stat = abs(shuffled_grouped.loc[1][2] - shuffled_grouped.loc[1][1])
         stats = np.append(stats, shuffled_stat)
 
-    plt.hist(stats)
-    plt.axvline(observed_stat, color='red')
-    plt.show()
+    fig = Figure()
+    FigureCanvas(fig)
+    ax = fig.add_subplot(111)
+    ax.set_title(
+        'Distribution of the absolute difference in proportion of squirrels\nexhibiting the ' +
+        '{0} behavior near {1} versus near {2}'.format(b, f1[4:], f2[4:]),
+        wrap=True
+    )
+    ax.get_xticklabels()
+    ax.hist(stats, density=True)
+    ax.axvline(observed_stat, color='red')
+    fig.savefig('histograms/{0}/{1}_{2}.png'.format(b, f1, f2), bbox_inches='tight')
 
     p_value = np.mean(stats >= observed_stat)
     stats_rows.append([b, f1, f2, p_value])
-
+    return
 
 
 for b in behaviors:
@@ -46,5 +56,5 @@ for b in behaviors:
 
 
 stats_df = pd.DataFrame(stats_rows)
-stats_df.columns=['behavior', 'feature 1', 'feature 2', 'p-value']
+stats_df.columns = ['behavior', 'feature 1', 'feature 2', 'p-value']
 stats_df.to_csv("dataframes/permutation_results.csv")
