@@ -1,8 +1,10 @@
 import streamlit as st
 import pandas as pd
+import folium
 import numpy as np
 import matplotlib.pyplot as plt
-from buffer_analysis import geospatial_analysis
+from streamlit_folium import folium_static
+from buffer_analysis import bfsqrls
 
 
 behaviors = [
@@ -37,7 +39,7 @@ def app():
         """
     )
 
-    col1, col2, col3 = st.columns(3)
+    col1, col2 = st.columns(2)
 
     f1 = ''
     f2 = ''
@@ -98,8 +100,40 @@ def app():
             st.write("Oh no! You can only select two features.")
 
     st.text("draw map of selected squirrels for the above variables")
+
     if f1 != '' and f2 != '':
         st.subheader("The p-value for squirrels exhibiting the {0} behavior near {1} "
                      "and near {2} is: {3}".format(b, f1[4:], f2[4:], p))
         st.image('histograms/{0}/{1}_{2}.png'.format(b, f1, f2))
         st.subheader("p-value: {}".format(p))
+
+        st.subheader("map")
+
+        u_comb = folium.Map(
+            location=[40.7823, -73.96600],
+            zoom_start=14,
+            min_zoom=14,
+            tiles='cartodbpositron',
+            control_scale=True)
+
+        u_comb_squirrels = folium.FeatureGroup()
+
+        u_comb_df = bfsqrls[(bfsqrls[f1]==True) | (bfsqrls[f2]==True)]
+
+        for i in range(len(u_comb_df)):
+            if u_comb_df.iloc[i][b] == True:
+                color = '#FF4B4B'
+            else:
+                color = 'gray'
+            folium.Circle(
+                location=(u_comb_df.iloc[i]['lat'], u_comb_df.iloc[i]['long']),
+                color=color,
+                radius=2).add_to(u_comb_squirrels)
+
+        u_comb_squirrels.add_to(u_comb)
+
+        folium_static(u_comb, width=620, height=680)
+
+    if st.checkbox("hit me with all the p-values!"):
+        sorted_by_p = permutation_results.sort_values(by='p-value')
+        st.dataframe(sorted_by_p)
