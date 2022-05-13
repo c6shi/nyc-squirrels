@@ -70,3 +70,5 @@ def app():
         near a distinct, different feature. 
         """
     )
+
+    st.subheader("Main Findings")
