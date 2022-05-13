@@ -93,7 +93,7 @@ def app():
                 (permutation_results['behavior'] == b) &
                 (permutation_results['feature 1'] == f1) &
                 (permutation_results['feature 2'] == f2)
-                ].get('p-value').array[0]
+                ].get('p-value').array[0] * 100
         elif variables == 0:
             st.write("Please select two features")
         else:
@@ -102,8 +102,9 @@ def app():
     st.text("draw map of selected squirrels for the above variables")
 
     if f1 != '' and f2 != '':
-        st.subheader("The p-value for squirrels exhibiting the {0} behavior near {1} "
-                     "and near {2} is: {3}".format(b, f1[4:], f2[4:], p))
+        st.subheader("Given that location does not affect behavior, {0} % of ".format(p) +
+                     "our simulations showed a difference in proportion of squirrels doing "
+                     "the {0} behavior near {1} and {2}".format(b, f1[4:], f2[4:], p))
         st.image('histograms/{0}/{1}_{2}.png'.format(b, f1, f2))
         st.subheader("p-value: {}".format(p))
 

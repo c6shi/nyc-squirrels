@@ -105,6 +105,7 @@ bfsqrls = buffered_nyc_df.query('nearbuilding == True '
                                 'or nearwoods == True'
                                 ).reset_index().drop(columns='index')
 
+bfsqrls = bfsqrls.drop(columns=['kuks', 'quaas', 'moans', 'tail_flags', 'tail_twitches'])
 bfsqrls.to_csv('dataframes/bfsqrls.csv')
 bfsqrlspd = bfsqrls.drop(columns=['long', 'lat', 'geometry'])
 bfsqrlspd.to_csv('dataframes/bfsqrlspd.csv')

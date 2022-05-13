@@ -50,25 +50,14 @@ def app():
 
     folium_static(raw_data_map, width=620, height=680)
 
+    st.subheader("Main Findings")
+
     st.markdown(
         """
-        #### Rundown of the process
-        
-        1. Cleaning the raw data by converting the types of columns to \
-        more usable data types and dropping unnecessary columns determined by EDA
-        2. Obtaining the Central Park data. Using the OpenStreetMap database, \
-        we selected features in Central Park that could best describe Central Park \
-        (i.e. features unique to a park like lakes, reservoirs, playgrounds, gardens, etc. \
-        and features that took up large amounts of space). These were downloaded \
-        in the geojson format.
-        3. Performing geospatial analysis such as buffer analysis to obtain \
-        data on a squirrel's geographic relationship with Central Park
-        4. Conducting permutation tests based on this null hypothesis: \
-        There is no difference between the proportion of squirrels \
-        exhibiting a specific behavior near one feature of Central Park \
-        than the proportion of squirrels exhibiting the same behavior \
-        near a distinct, different feature. 
+        - 19 combinations of behavior and two distinct features were significant
+        - 8 out of the 19 combinations had "indifferent" as the behavior
+        - 5 out of the 8 indifferent combinations had "near grass" as a feature
+        - "foraging" and "approaches" behaviors did not have any significant results
+        - combinations with the "indifferent" behavior had the most significant results
         """
     )
-
-    st.subheader("Main Findings")
