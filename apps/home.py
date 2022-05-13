@@ -1,7 +1,6 @@
 import streamlit as st
 from streamlit_folium import folium_static
 from mapping import raw_data_map
-from PIL import Image
 
 
 def app():
