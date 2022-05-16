@@ -58,4 +58,4 @@ for b in behaviors[:3]:
 
 stats_df = pd.DataFrame(stats_rows)
 stats_df.columns = ['behavior', 'feature 1', 'feature 2', 'p-value']
-stats_df.to_csv("dataframes/permutation_results2.csv")
+stats_df.to_csv("dataframes/permutation_results.csv")
