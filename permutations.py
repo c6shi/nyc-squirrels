@@ -50,7 +50,7 @@ def permutation_test(b, f1, f2):
     return
 
 
-for b in behaviors[3:]:
+for b in behaviors[:3]:
     for i in range(len(features)):
         for j in range(i+1, len(features)):
             permutation_test(b, features[i], features[j])
@@ -58,4 +58,4 @@ for b in behaviors[3:]:
 
 stats_df = pd.DataFrame(stats_rows)
 stats_df.columns = ['behavior', 'feature 1', 'feature 2', 'p-value']
-stats_df.to_csv("dataframes/permutation_results.csv")
+stats_df.to_csv("dataframes/permutation_results2.csv")
