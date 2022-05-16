@@ -4,7 +4,7 @@ from mapping import raw_data_map
 
 
 def app():
-    st.title("Data Analysis on Squirrels in Central Park, NYC")
+    st.title("Geospatial Data Analysis on Squirrels in Central Park, NYC")
 
     # squirrel = Image.open('squirrel.jpeg')
 

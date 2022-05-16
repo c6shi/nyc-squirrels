@@ -4,8 +4,9 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 
 behaviors = [
-    'approaches', 'indifferent', 'runs_from',
-    'running', 'chasing', 'eating', 'foraging', 'climbing']
+    'indifferent', 'runs_from',
+    'running', 'chasing', 'eating', 'foraging',
+    'tail_twitches']
 
 features = ['nearbuilding', 'neargarden', 'neargrass', 'nearpedestrian', 'nearwater', 'nearwoods']
 

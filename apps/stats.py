@@ -8,8 +8,9 @@ from buffer_analysis import bfsqrls
 
 
 behaviors = [
-    'approaches', 'indifferent', 'runs_from',
-    'running', 'chasing', 'eating', 'foraging', 'climbing']
+    'indifferent', 'runs_from',
+    'running', 'chasing', 'eating', 'foraging',
+    'tail_twitches']
 
 
 permutation_results = pd.read_csv('dataframes/permutation_results.csv')
@@ -93,22 +94,21 @@ def app():
                 (permutation_results['behavior'] == b) &
                 (permutation_results['feature 1'] == f1) &
                 (permutation_results['feature 2'] == f2)
-                ].get('p-value').array[0] * 100
+                ].get('p-value').array[0]
         elif variables == 0:
             st.write("Please select two features")
         else:
             st.write("Oh no! You can only select two features.")
 
-    st.text("draw map of selected squirrels for the above variables")
-
     if f1 != '' and f2 != '':
-        st.subheader("Given that location does not affect behavior, {0} % of ".format(p) +
-                     "our simulations showed a difference in proportion of squirrels doing "
-                     "the {0} behavior near {1} and {2}".format(b, f1[4:], f2[4:], p))
+
         st.image('histograms/{0}/{1}_{2}.png'.format(b, f1, f2))
         st.subheader("p-value: {}".format(p))
+        st.markdown("Given that location does not affect behavior, we expect {0} % of ".format(p * 100) +
+                    "our simulations to exhibit a difference greater than or equal to the " +
+                    "observed difference.")
 
-        st.subheader("map")
+        st.subheader("map-ify!")
 
         u_comb = folium.Map(
             location=[40.7823, -73.96600],

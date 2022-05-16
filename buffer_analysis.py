@@ -61,7 +61,7 @@ planar_features['buffer_radius'] = planar_features['area'].apply(
 
 # e) define buffer analysis function on planar projected points_df
 # for each polygon in relevant features
-def buffer_analysis(points_df):
+def buffer_analysis(points_df, buffer_df):
     """
     Modifies points_df to include boolean values of whether the point is in the buffer
     :param points_df: dataframe with the points to buffer
@@ -70,7 +70,7 @@ def buffer_analysis(points_df):
     buffer_geoseries = np.array([])
 
     for i in range(len(relev_features)):
-        temp = planar_features[planar_features['feature_type'] == relev_features[i]].reset_index()
+        temp = buffer_df[buffer_df['feature_type'] == relev_features[i]].reset_index()
         temp_array = np.array([])
 
         for j in range(len(temp)):
@@ -83,13 +83,13 @@ def buffer_analysis(points_df):
         # creating buffer columns
         points_df[geospatial_analysis[i]] = points_df.to_crs('epsg:2263').within(temp_planar_buffer)
 
-    planar_features['buffer_geometry'] = buffer_gpd.geometry
+    buffer_df['buffer_geometry'] = buffer_gpd.geometry
 
-    return planar_features.set_geometry('buffer_geometry').drop(columns='geometry').to_crs('epsg:4326')
+    return buffer_df.set_geometry('buffer_geometry').drop(columns='geometry').to_crs('epsg:4326')
 
 
 # f) create buffer_features for mapping specific buffers
-buffer_features = buffer_analysis(nyc_gdf1)
+buffer_features = buffer_analysis(nyc_gdf1, planar_features)
 
 
 # 3) BUFFERED DATASET PREPARED FOR PERMUTATION TESTS
@@ -105,9 +105,7 @@ bfsqrls = buffered_nyc_df.query('nearbuilding == True '
                                 'or nearwoods == True'
                                 ).reset_index().drop(columns='index')
 
-bfsqrls = bfsqrls.drop(columns=['kuks', 'quaas', 'moans', 'tail_flags', 'tail_twitches'])
+bfsqrls = bfsqrls.drop(columns=['kuks', 'quaas', 'moans', 'tail_flags', 'approaches', 'chasing'])
 bfsqrls.to_csv('dataframes/bfsqrls.csv')
 bfsqrlspd = bfsqrls.drop(columns=['long', 'lat', 'geometry'])
 bfsqrlspd.to_csv('dataframes/bfsqrlspd.csv')
-
-print(nyc_gdf1['approaches'].unique())
