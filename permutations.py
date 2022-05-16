@@ -5,7 +5,7 @@ from matplotlib.figure import Figure
 
 behaviors = [
     'indifferent', 'runs_from',
-    'running', 'chasing', 'eating', 'foraging',
+    'running', 'climbing', 'eating', 'foraging',
     'tail_twitches']
 
 features = ['nearbuilding', 'neargarden', 'neargrass', 'nearpedestrian', 'nearwater', 'nearwoods']
@@ -50,7 +50,7 @@ def permutation_test(b, f1, f2):
     return
 
 
-for b in behaviors:
+for b in behaviors[3:]:
     for i in range(len(features)):
         for j in range(i+1, len(features)):
             permutation_test(b, features[i], features[j])
