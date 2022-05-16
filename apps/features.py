@@ -53,23 +53,4 @@ def app():
             """
         )
 
-        # multi selection box
-        features = st.multiselect("Choose relevant features in Central Park:", relev_features, key='selected')
-        if st.checkbox("Show all relevant features"):
-            folium_static(cp_featuresmap, width=620, height=680)
-        else:
-            cp_selectfeatures_map = folium.Map(location=[40.7823, -73.96600],
-                                               zoom_start=14,
-                                               min_zoom=14,
-                                               tiles='cartodbpositron',
-                                               control_scale=True)
-            for feature in features:
-                folium.GeoJson(cp_features[cp_features['feature_type'] == feature],
-                               name=feature,
-                               style_function=lambda x: {'color': all_colors.get(feature),
-                                                         'fillOpacity': 0.6}
-                               ).add_to(cp_selectfeatures_map)
-
-            folium.LayerControl().add_to(cp_selectfeatures_map)
-            folium_static(cp_selectfeatures_map, width=620, height=680)
-
+        folium_static(cp_featuresmap, width=620, height=680)

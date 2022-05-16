@@ -3,12 +3,13 @@ import numpy as np
 import geemap
 import folium
 import streamlit as st
-import pyproj
+import plotly.express as px
 import geopandas as gpd
 from streamlit_folium import folium_static
 from data_cleaning import (
     cp_features,
-    relev_features
+    relev_features,
+    behaviors
 )
 from mapping import (
     cp_allfeaturesmap,
@@ -17,7 +18,7 @@ from mapping import (
     featuregroup_to_map,
     geojson_to_map_obj
 )
-from buffer_analysis import calculate_buffer_radius, buffer_analysis, nyc_gdf1, bfsqrls
+from buffer_analysis import calculate_buffer_radius, buffer_analysis, nyc_gdf1, geospatial_analysis
 
 
 def app():
@@ -51,6 +52,18 @@ def app():
         calculate_buffer_radius, power=power, factor=factor_slider, cap=150, base=50)
 
     buffer_features = buffer_analysis(nyc_gdf1, planar_features)
+
+    buffered_nyc_df = nyc_gdf1[['long', 'lat', 'geometry'] + behaviors + geospatial_analysis].to_crs('epsg:4326')
+
+    bfsqrls = buffered_nyc_df.query('nearbuilding == True '
+                                    'or neargarden == True '
+                                    'or neargrass == True '
+                                    'or nearpedestrian == True '
+                                    'or nearwater == True '
+                                    'or nearwoods == True'
+                                    ).reset_index().drop(columns='index')
+
+    bfsqrls = bfsqrls.drop(columns=['kuks', 'quaas', 'moans', 'tail_flags', 'approaches', 'chasing'])
 
     buffermap = folium.Map(
         location=[40.7823, -73.96600],
@@ -113,5 +126,7 @@ def app():
     with col2:
         folium_static(squirrels_buffered_map, width=620, height=680)
 
-    st.markdown("Display count of squirrels in each buffer as a bar graph")
+    below_map = px.bar(bfsqrls[geospatial_analysis].sum(), text_auto=True)
+    st.plotly_chart(below_map)
+
     st.markdown("Small multiple graphs to show why we chose 0.4 and 1.2?")
