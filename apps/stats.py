@@ -31,10 +31,6 @@ def app():
         because it randomly shuffles the true/false values of a behavior among the certain
         pairs of features. 
         
-        However, there arises the issue of overlapping features. Perhaps a squirrel
-        can be located inside both features' buffers. We resolved this by ... 
-        (try k-nearest neighbor algorithm and assign squirrel based on nearest group)
-        
         To reduce runtime, the widget below is not running the permutation test
         live. 
         """
