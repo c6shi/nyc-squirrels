@@ -104,7 +104,7 @@ def app():
                     "our simulations to exhibit a difference in the proportions greater than or equal to the " +
                     "observed difference.")
 
-        st.subheader("map-ify!")
+        st.subheader("Behavior in Selected Features")
 
         u_comb = folium.Map(
             location=[40.7823, -73.96600],
