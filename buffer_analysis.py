@@ -106,18 +106,6 @@ bfsqrls = buffered_nyc_df.query('nearbuilding == True '
                                 ).reset_index().drop(columns='index')
 
 bfsqrls = bfsqrls.drop(columns=['kuks', 'quaas', 'moans', 'tail_flags', 'approaches', 'chasing'])
-bfsqrls.to_csv('dataframes/bfsqrls.csv')
+# bfsqrls.to_csv('dataframes/bfsqrls.csv')
 bfsqrlspd = bfsqrls.drop(columns=['long', 'lat', 'geometry'])
-bfsqrlspd.to_csv('dataframes/bfsqrlspd.csv')
-
-
-# 4) SMALL MULTIPLES
-
-def gen_small_multiples(arb_planar_features):
-    arb_buffer_features = buffer_analysis(nyc_gdf1, arb_planar_features)
-
-
-for exponent in range(1, 10, 1):
-    for constant in range(1, 40, 1):
-        planar_features['buffer_radius'] = planar_features['area'].apply(
-            calculate_buffer_radius, power=exponent/10, factor=constant/10, cap=150, base=50)
+# bfsqrlspd.to_csv('dataframes/bfsqrlspd.csv')

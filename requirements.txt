@@ -6,4 +6,5 @@ geopandas
 numpy
 shapely
 matplotlib
-geemap
+plotly
+pyproj
