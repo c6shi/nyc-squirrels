@@ -103,9 +103,9 @@ def app():
     if f1 != '' and f2 != '':
 
         st.image('histograms/{0}/{1}_{2}.png'.format(b, f1, f2))
-        st.subheader("p-value: {}".format(p))
+        st.markdown("p-value: {}".format(p))
         st.markdown("Given that location does not affect behavior, we expect {0} % of ".format(p * 100) +
-                    "our simulations to exhibit a difference greater than or equal to the " +
+                    "our simulations to exhibit a difference in the proportions greater than or equal to the " +
                     "observed difference.")
 
         st.subheader("map-ify!")
@@ -135,6 +135,13 @@ def app():
 
         folium_static(u_comb, width=620, height=680)
 
-    if st.checkbox("hit me with all the p-values!"):
+    if st.checkbox("show me all the p-values!"):
         sorted_by_p = permutation_results.sort_values(by='p-value')
+        hide_dataframe_row_index = """
+                    <style>
+                    .row_heading.level0 {display:none}
+                    .blank {display:none}
+                    </style>
+                    """
+        st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
         st.dataframe(sorted_by_p)
