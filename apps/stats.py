@@ -131,6 +131,13 @@ def app():
 
         folium_static(u_comb, width=620, height=680)
 
+        st.markdown(
+            """
+            In the above map, the red dots represent squirrels within each feature exhibiting the behavior.
+            The gray dots represent squirrels within each feature not exhibiting the behavior.
+            """
+        )
+
     if st.checkbox("show me all the p-values!"):
         sorted_by_p = permutation_results.sort_values(by='p-value')
         hide_dataframe_row_index = """
