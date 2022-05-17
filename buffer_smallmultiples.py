@@ -43,7 +43,7 @@ def gen_small_multiples(arb_planar_features, exponent, constant_start, constant_
         labels={
             'value': 'number of squirrels',
             'variable': 'buffer key'
-        }  # change colors to match buffer colors
+        }
     )
     buffercomp.update_layout(
         title=dict(
@@ -80,4 +80,4 @@ var_planar_features = cp_features.to_crs('epsg:2263')
 var_planar_features['area'] = var_planar_features.geometry.area
 
 for exponent in range(1, 6, 1):
-    gen_small_multiples(var_planar_features, exponent, 1, 41)
+    gen_small_multiples(var_planar_features, exponent, 1, 31)

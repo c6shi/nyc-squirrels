@@ -50,7 +50,7 @@ def permutation_test(b, f1, f2):
     return
 
 
-for b in behaviors[:3]:
+for b in behaviors:
     for i in range(len(features)):
         for j in range(i+1, len(features)):
             permutation_test(b, features[i], features[j])
