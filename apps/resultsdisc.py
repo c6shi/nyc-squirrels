@@ -16,7 +16,10 @@ def app():
         color='p-value',
         color_continuous_scale=px.colors.sequential.Oryel_r,
         width=1000,
-        height=600
+        height=600,
+    )
+    alluvial.update_layout(
+        font=dict(size=20)
     )
     st.plotly_chart(alluvial)
 
