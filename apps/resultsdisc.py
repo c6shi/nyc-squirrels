@@ -14,7 +14,9 @@ def app():
         sig,
         dimensions=['behavior', 'feature 1', 'feature 2'],
         color='p-value',
-        color_continuous_scale=px.colors.sequential.Oryel_r
+        color_continuous_scale=px.colors.sequential.Oryel_r,
+        width=1000,
+        height=600
     )
     st.plotly_chart(alluvial)
 
