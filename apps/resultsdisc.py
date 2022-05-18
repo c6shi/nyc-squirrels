@@ -16,31 +16,41 @@ def app():
     results = results.drop(columns='Unnamed: 0')
     sig = results[results['p-value'] < 0.05]
 
-    sorted_by_p = sig.sort_values(by='p-value')
-    hide_dataframe_row_index = """
-                        <style>
-                        .row_heading.level0 {display:none}
-                        .blank {display:none}
-                        </style>
-                        """
-    st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
-    st.dataframe(sorted_by_p)
+    col1, col2 = st.columns(2)
+    with col1:
+        sorted_by_p = sig.sort_values(by='p-value')
+        hide_dataframe_row_index = """
+                            <style>
+                            .row_heading.level0 {display:none}
+                            .blank {display:none}
+                            </style>
+                            """
+        # st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
+        # st.dataframe(sorted_by_p)
+        hide_table_row_index = """
+                    <style>
+                    tbody th {display:none}
+                    .blank {display:none}
+                    </style>
+                    """
+        st.markdown(hide_table_row_index, unsafe_allow_html=True)
+        st.table(sorted_by_p)
 
-    alluvial = px.parallel_categories(
-        sig,
-        dimensions=['behavior', 'feature 1', 'feature 2'],
-        color='p-value',
-        color_continuous_scale=px.colors.sequential.Oryel_r,
-    )
-    st.plotly_chart(alluvial)
-
-    st.markdown(
-        """
-        The interactive alluvial chart above helps visualize which behavior and feature was most common 
-        and most significant. Feel free to drag the unique values for each variable to see the specific combinations
-        more clearly.
-        """
-    )
+    with col2:
+        alluvial = px.parallel_categories(
+            sig,
+            dimensions=['behavior', 'feature 1', 'feature 2'],
+            color='p-value',
+            color_continuous_scale=px.colors.sequential.Oryel_r,
+        )
+        st.plotly_chart(alluvial)
+        st.markdown(
+            """
+            The interactive alluvial chart above helps visualize which behavior and feature was most common 
+            and most significant. Feel free to drag the unique values for each variable to see the specific combinations
+            more clearly.
+            """
+        )
 
     st.subheader("Observations")
     st.markdown(
