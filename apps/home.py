@@ -54,10 +54,12 @@ def app():
 
     st.markdown(
         """
-        - 19 combinations of behavior and two distinct features were significant
-        - 8 out of the 19 combinations had "indifferent" as the behavior
-        - 5 out of the 8 indifferent combinations had "near grass" as a feature
-        - "foraging" and "approaches" behaviors did not have any significant results
+        - 18 combinations of behavior and two distinct features were significant
+        - 8 out of the 18 combinations had "indifferent" as the behavior
+        - 10 out of the 18 combinations had "near woods" as a feature
+        - 9 out of the 18 combinations had "grass" as a feature
+        - 8 out of the 18 combinations had "pedestrian" as a feature
+        - Of the 7 behaviors we tested, the "foraging" behavior did not have any significant results
         - combinations with the "indifferent" behavior had the most significant results
         """
     )
