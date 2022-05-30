@@ -33,11 +33,15 @@ def app():
         with the water feature than a squirrel far away from the water body. Hence,
         we expanded a squirrel's location in relation to a feature to be ***near***
         a feature.
+        
+        A min and max bound was placed in order to account for:
+        - a polyline which has no area
+        - a large polygon such as the Jacqueline Kennedy Onassis Reservoir generating a buffer larger than Central Park itself
         """
     )
 
-    power = st.slider("Select the buffer power:", 0.1, 1.0, step=0.05)
-    factor_slider = st.slider("Select the buffer factor:", 0.1, 4.0, step=0.1)
+    power = st.slider("Select the buffer power:", 0.1, 1.0, value=0.4, step=0.05)
+    factor_slider = st.slider("Select the buffer factor:", 0.1, 4.0, value=1.2, step=0.1)
 
     # buffer interaction
     planar_features = cp_features.to_crs('epsg:2263')
@@ -86,7 +90,7 @@ def app():
 
     folium.LayerControl().add_to(buffermap)
 
-    st.text("Buffer size: {1} * area ^ {0}".format(power, factor_slider))
+    st.latex(r'''Buffer\: Radius = {factor}\cdot Area ^ {{{power}}}'''.format(power=power, factor=factor_slider))
 
     squirrels_buffered_map = folium.Map(
         location=[40.7823, -73.96600],
@@ -114,11 +118,15 @@ def app():
     squirrels_notin_buffer.add_to(squirrels_buffered_map)
     squirrels_in_buffer.add_to(squirrels_buffered_map)
 
+    st.caption("If the graphics below are overlapping, please close the Navigation bar for optimal viewing.")
+
     col1, col2 = st.columns(2)
     with col1:
+        st.write("Buffer Map")
         folium_static(buffermap, width=620, height=680)
 
     with col2:
+        st.write("Buffered Squirrels Map (squirrels inside any buffer are in red")
         folium_static(squirrels_buffered_map, width=620, height=680)
 
     below_map = px.bar(
@@ -150,7 +158,7 @@ def app():
         so we decided to make buffer size in terms of the area of each feature, and not have
         all features have the same buffer size.
         
-        How did we end up choosing a buffer size equation of 1.2 * area ^ 0.4?
+        How did we end up choosing a buffer size equation with a constant factor multiplied by area to the power of some exponent?
         The original inspiration for this style came from Candus thinking of the 
         Stefan-Boltzmann equation about thermal radiation. 
         """

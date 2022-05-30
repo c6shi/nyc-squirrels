@@ -100,7 +100,7 @@ def app():
 
         st.image('histograms/{0}/{1}_{2}.png'.format(b, f1, f2))
         st.markdown("p-value: {}".format(p))
-        st.markdown("Given that location does not affect behavior, we expect {0} % of ".format(p * 100) +
+        st.markdown("Given that location does not affect behavior, we expect {0} % of ".format(round(p * 100, 2)) +
                     "our simulations to exhibit a difference in the proportions greater than or equal to the " +
                     "observed difference.")
 
@@ -138,13 +138,13 @@ def app():
 
         folium_static(u_comb, width=620, height=680)
 
-    if st.checkbox("show me all the p-values!"):
-        sorted_by_p = permutation_results.sort_values(by='p-value')
-        hide_dataframe_row_index = """
-                    <style>
-                    .row_heading.level0 {display:none}
-                    .blank {display:none}
-                    </style>
-                    """
-        st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
-        st.dataframe(sorted_by_p)
+    # if st.checkbox("show me all the p-values!"):
+    #     sorted_by_p = permutation_results.sort_values(by='p-value')
+    #     hide_dataframe_row_index = """
+    #                 <style>
+    #                 .row_heading.level0 {display:none}
+    #                 .blank {display:none}
+    #                 </style>
+    #                 """
+    #     st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
+    #     st.dataframe(sorted_by_p)
