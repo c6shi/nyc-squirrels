@@ -17,7 +17,7 @@ def app():
         Perhaps it is the informational data they could get about Central Park itself and its interactions with the 
         animals that inhabit it. Or maybe they wanted to analyze one of the most populous and overlooked animals in the 
         United States. Or maybe they were just obsessed with Squirrel-Girl the Marvel superhero. 
-        Regardless, hundreds of volunteers sought out to examine these eastern gray squirrels, 
+        Regardless, hundreds of volunteers sought out to examine these Eastern Gray squirrels, 
         looking for valuable insights. 
         
         Since we had access to geospatial data in the form of the coordinates of a squirrel sighting, 

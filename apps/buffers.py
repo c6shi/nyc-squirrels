@@ -41,7 +41,7 @@ def app():
     )
 
     power = st.slider("Select the buffer power:", 0.1, 1.0, value=0.4, step=0.05)
-    factor_slider = st.slider("Select the buffer factor:", 0.1, 4.0, value=1.2, step=0.1)
+    factor_slider = st.slider("Select the buffer factor:", 0.1, 3.0, value=1.2, step=0.1)
 
     # buffer interaction
     planar_features = cp_features.to_crs('epsg:2263')
@@ -126,8 +126,12 @@ def app():
         folium_static(buffermap, width=620, height=680)
 
     with col2:
-        st.write("Buffered Squirrels Map (squirrels inside any buffer are in red")
+        st.write("Buffered Squirrels Map")
         folium_static(squirrels_buffered_map, width=620, height=680)
+        st.write("Squirrels inside any of the buffers are in red "
+                 "while the gray dots represent squirrels for which we could not "
+                 "define a geospatial relationship with Central Park and will not be "
+                 "considered when performing the statistical tests.")
 
     below_map = px.bar(
         bfsqrls[geospatial_analysis].sum(),
@@ -184,6 +188,7 @@ def app():
         with open('bufferradiuscomparison/buffer0.2.html', 'r') as f:
             buffer0_2 = f.read()
             components.html(buffer0_2, width=small_multiple_w, height=small_multiple_h)
+        st.write("We ended up choosing this one! (a power of 0.4 and a factor of 1.2)")
         with open('bufferradiuscomparison/buffer0.4.html', 'r') as f:
             buffer0_4 = f.read()
             components.html(buffer0_4, width=small_multiple_w, height=small_multiple_h)
